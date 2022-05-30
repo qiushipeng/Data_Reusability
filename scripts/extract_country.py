@@ -23,8 +23,8 @@ for file_name in file_names:
     try:
         country = extract_country(file)[-1]
     except:
-        country = 'error'
+        country = 'N/A'
     pmc_ID = file_name.split('.')[0]
-    saved_file = open('/scratch1/qiushipe/data_reusability/data_lists/Country.csv', 'a+')
+    saved_file = open('/scratch1/qiushipe/data_reusability/data_lists/country.csv', 'a+')
     saved_file.writelines(pmc_ID + ',' + country + '\n')
     saved_file.close()
