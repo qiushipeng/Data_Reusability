@@ -1,5 +1,6 @@
 import os
 import xml.etree.ElementTree as ET
+from geotext import GeoText
 
 path = '/scratch1/qiushipe/data_reusability/publications_sorted'
 file_names = os.listdir(path)
@@ -13,8 +14,8 @@ def extract_country(file):
     countries = []
     for i in range(len(labels)):
         aff = labels[i].tail
-        country = aff.split(',')[-1].strip()
-        #  e.g. Unit of Health Sciences and Education, University of Hamburg, Martin-Luther-King Platz 6, 20146 Hamburg, Germany
+            #  e.g. Unit of Health Sciences and Education, University of Hamburg, Martin-Luther-King Platz 6, 20146 Hamburg, Germany
+        country = GeoText(aff).countries[0]
         countries.append(country)
     return countries
 

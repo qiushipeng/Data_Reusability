@@ -7,5 +7,5 @@
 
 module purge
 eval "$(conda shell.bash hook)"
-conda activate /project/ypatel_840/qiushipe/reusability
+conda activate /home1/qiushipe/.conda/envs/myenv
 python /scratch1/qiushipe/data_reusability/scripts/extract_country.py
