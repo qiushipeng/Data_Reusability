@@ -9,7 +9,7 @@ def extract_country(file):
     try:
         root = ET.parse(file).getroot()
     except:
-        return 'error'
+        return ['error']
     labels = root.findall('./front/article-meta/aff/label')
     countries = []
     for i in range(len(labels)):
