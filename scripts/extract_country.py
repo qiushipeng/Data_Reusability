@@ -10,6 +10,8 @@ def extract_country(file):
         root = ET.parse(file).getroot()
     except:
         return ['error']
+    
+
     labels = root.findall('./front/article-meta/aff/label')
     countries = []
     for i in range(len(labels)):
@@ -17,6 +19,17 @@ def extract_country(file):
             #  e.g. Unit of Health Sciences and Education, University of Hamburg, Martin-Luther-King Platz 6, 20146 Hamburg, Germany
         country = GeoText(aff).countries[0]
         countries.append(country)
+    
+    ### different arrangement in xml files
+    if countries == []:
+        institution_wrap = root.findall('./front/article-meta/contrib-group/aff/institution-wrap')
+        for i in range(len(institution_wrap)):
+            aff = institution_wrap[i].tail
+            country = GeoText(aff).countries[0]
+            countries.append(country)
+    else:
+        pass
+
     return countries
 
 for file_name in file_names:
