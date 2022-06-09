@@ -12,7 +12,7 @@ def extract_country(text):
     e.find_geoEntities()
     plc = places.PlaceContext(e.places)
     plc.set_countries()
-    return plc.countryies[-1]
+    return plc.countries[-1]
 
 
 ### find all countries mentioned in a xml file
@@ -38,8 +38,6 @@ def parse_file(file):
             aff = institution_wrap[i].tail
             country = extract_country(aff)
             countries.append(country)
-    else:
-        pass
 
     return countries
 
