@@ -36,14 +36,27 @@ def parse_file(file):
         pass
     
     try:
-        ## another different arrangement of xml files
+        ## different arrangement of xml files
         if countries == []:
             tag_country = root.findall('./front/article-meta/aff/country')
             for i in range(len(tag_country)):
                 country = tag_country[i].text
                 countries.append(country)
-    except: pass
+    except: 
+        pass
+    
+    try:
+        ## different arrangement of xml files
+        if countries == []:
+            addr_line = root.findall('./front/article-meta/aff/addr-line')
+            for i in range(len(addr_line)):
+                aff = labels[i].tail
+		        country = aff.split(',')[-1].strip()
+                countries.append(country)
 
+    except:
+        pass
+    
     return countries
 
 
