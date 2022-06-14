@@ -1,6 +1,5 @@
 import os
 import xml.etree.ElementTree as ET
-import re
 
 path = '/scratch1/qiushipe/data_reusability/publications_sorted'
 file_names = os.listdir(path)
@@ -50,8 +49,8 @@ def parse_file(file):
         if countries == []:
             addr_line = root.findall('./front/article-meta/aff/addr-line')
             for i in range(len(addr_line)):
-                aff = labels[i].tail
-		        country = aff.split(',')[-1].strip()
+                aff = addr_line[i].text
+                country = aff.split(',')[-1].strip()
                 countries.append(country)
 
     except:
