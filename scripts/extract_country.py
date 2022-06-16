@@ -65,7 +65,7 @@ def parse_file(file):
     except:
         pass
     
-    return countries[aff_num]
+    return countries[aff_num - 1]
 
 
 for file_name in file_names:
