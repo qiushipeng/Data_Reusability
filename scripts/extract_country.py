@@ -10,15 +10,15 @@ def parse_file(file):
     try:
         root = ET.parse(file).getroot()
     except:
-        return ['error']
+        return 'error'
     
     ## find the number of last author's affliation
     try:
-        contribs = root.findall('./front/article-meta/contrib-group/contrib')
+        contribs = root.findall('./front/article-meta/contrib-group/contrib[@contrib-type="author"]')
         xrefs = contribs[-1].findall('./xref')
         aff_num = int(xrefs[0].attrib['rid'][3:])
     except:
-        return ['error']
+        return 'error'
     
     countries = []
 
