@@ -12,7 +12,17 @@ def parse_file(file):
     except:
         return ['error']
     
+    ## find the number of last author's affliation
+    try:
+        contribs = root.findall('./front/article-meta/contrib-group/contrib')
+        xrefs = contribs[-1].findall('./xref')
+        aff_num = int(xrefs[0].attrib['rid'][3:])
+    except:
+        return ['error']
+    
     countries = []
+
+    ##1 different arrangement of xml files
     try:
         labels = root.findall('./front/article-meta/aff/label')
         for i in range(len(labels)):
@@ -23,8 +33,8 @@ def parse_file(file):
     except:
         pass
     
+    ##2 different arrangement of xml files
     try:
-        ## different arrangement of xml files
         if all(i == '' for i in countries):
             institution_wrap = root.findall('./front/article-meta/contrib-group/aff/institution-wrap')
             for i in range(len(institution_wrap)):
@@ -34,8 +44,8 @@ def parse_file(file):
     except:
         pass
     
+    ##3 different arrangement of xml files
     try:
-        ## different arrangement of xml files
         if all(i == '' for i in countries):
             tag_country = root.findall('./front/article-meta/aff/country')
             for i in range(len(tag_country)):
@@ -44,8 +54,8 @@ def parse_file(file):
     except: 
         pass
     
+    ##4 different arrangement of xml files
     try:
-        ## different arrangement of xml files
         if all(i == '' for i in countries):
             addr_line = root.findall('./front/article-meta/aff/addr-line')
             for i in range(len(addr_line)):
@@ -55,13 +65,13 @@ def parse_file(file):
     except:
         pass
     
-    return countries
+    return countries[aff_num]
 
 
 for file_name in file_names:
     file = open(path + '/' + file_name)
     try:
-        country = parse_file(file)[-1]
+        country = parse_file(file)
     except:
         country = 'N/A'
     pmc_ID = file_name.split('.')[0]
