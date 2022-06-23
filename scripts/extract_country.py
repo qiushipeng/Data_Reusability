@@ -12,7 +12,7 @@ def parse_file(file):
     except:
         return 'error'
     
-    ## find the number of last author's affliation
+    ## find the serial number of last author's affliation
     try:
         contribs = root.findall('./front/article-meta/contrib-group/contrib[@contrib-type="author"]')
         xrefs = contribs[-1].findall('./xref')
@@ -36,6 +36,7 @@ def parse_file(file):
     ##2 different arrangement of xml files
     try:
         if all(i == '' for i in countries):
+            countries = []
             institution_wrap = root.findall('./front/article-meta/contrib-group/aff/institution-wrap')
             for i in range(len(institution_wrap)):
                 aff = institution_wrap[i].tail
@@ -47,6 +48,7 @@ def parse_file(file):
     ##3 different arrangement of xml files
     try:
         if all(i == '' for i in countries):
+            countries = []
             tag_country = root.findall('./front/article-meta/aff/country')
             for i in range(len(tag_country)):
                 country = tag_country[i].text
@@ -57,6 +59,7 @@ def parse_file(file):
     ##4 different arrangement of xml files
     try:
         if all(i == '' for i in countries):
+            countries = []
             addr_line = root.findall('./front/article-meta/aff/addr-line')
             for i in range(len(addr_line)):
                 aff = addr_line[i].text
