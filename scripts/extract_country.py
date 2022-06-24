@@ -16,7 +16,12 @@ def parse_file(file):
     try:
         contribs = root.findall('./front/article-meta/contrib-group/contrib[@contrib-type="author"]')
         xrefs = contribs[-1].findall('./xref')
-        aff_num = int(xrefs[0].attrib['rid'][3:])
+        try:
+            # e.g. <xref rid="aff2" ref-type="aff">2</xref>
+            aff_num = int(xrefs[0].attrib['rid'][3:])
+        except:
+            # e.g. <xref ref-type="aff" rid="A1">1</xref>
+            aff_num = int(xrefs[0].attrib['rid'][1:])            
     except:
         return 'error'
     
