@@ -4,6 +4,27 @@ import xml.etree.ElementTree as ET
 path = '/scratch1/qiushipe/data_reusability/publications_sorted'
 file_names = os.listdir(path)
 
+### find the serial number of last author's affliation
+def get_aff_num(root):
+    contribs = root.findall('./front/article-meta/contrib-group/contrib[@contrib-type="author"]')
+    xrefs = contribs[-1].findall('./xref')
+    try:
+        # e.g. <xref rid="aff2" ref-type="aff">2</xref>
+        aff_num = int(xrefs[0].attrib['rid'][3:])
+    except:
+        pass
+    try:
+        # e.g. <xref ref-type="aff" rid="A1">1</xref>
+        aff_num = int(xrefs[0].attrib['rid'][1:])
+    except:
+        pass
+    try:
+        # e.g. <xref ref-type="aff" rid="evy198-aff4">4</xref>
+        aff_num = int(xrefs[0].attrib['rid'].split('aff')[-1])
+    except:
+        pass
+    return aff_num
+
 
 ### find all countries mentioned in a xml file
 def parse_file(file):
@@ -14,17 +35,10 @@ def parse_file(file):
     
     ## find the serial number of last author's affliation
     try:
-        contribs = root.findall('./front/article-meta/contrib-group/contrib[@contrib-type="author"]')
-        xrefs = contribs[-1].findall('./xref')
-        try:
-            # e.g. <xref rid="aff2" ref-type="aff">2</xref>
-            aff_num = int(xrefs[0].attrib['rid'][3:])
-        except:
-            # e.g. <xref ref-type="aff" rid="A1">1</xref>
-            aff_num = int(xrefs[0].attrib['rid'][1:])            
+        aff_num = get_aff_num(root)
     except:
         return 'AuthorError'
-    
+
     countries = []
 
     ##1 different arrangement of xml files
