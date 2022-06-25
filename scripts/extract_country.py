@@ -65,7 +65,6 @@ def parse_file(file):
     try:
         if all(i == '' for i in countries):
             countries = []
-            for i in range(len(addr_line)):
             addr_lines = root.findall('./front/article-meta/aff/addr-line')
             for i in range(len(addr_lines)):
                 aff = addr_lines[i].text
