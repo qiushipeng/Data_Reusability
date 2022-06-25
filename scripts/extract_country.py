@@ -73,6 +73,18 @@ def parse_file(file):
     except:
         pass
     
+    ##5 different arrangement of xml files
+    try:
+        if all(i == '' for i in countries):
+            countries = []
+            addr_line = root.findall('./front/article-meta/contrib-group/aff/label')
+            for i in range(len(addr_line)):
+                aff = addr_line[i].text
+                country = aff.split(',')[-1].strip()
+                countries.append(country)
+    except:
+        pass
+
     return countries[aff_num - 1]
 
 
