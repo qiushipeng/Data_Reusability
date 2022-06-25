@@ -111,6 +111,17 @@ def parse_file(file):
     except:
         pass
 
+    ##7 different arrangement of xml files
+    try:
+        if all(i == '' for i in countries):
+            countries = []
+            tag_country = root.findall('./front/article-meta/contrib-group/aff/country')
+            for i in range(len(tag_country)):
+                country = tag_country[i].text
+                countries.append(country)
+    except:
+        pass
+
     return countries[aff_num - 1]
 
 
