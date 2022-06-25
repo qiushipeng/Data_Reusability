@@ -65,9 +65,10 @@ def parse_file(file):
     try:
         if all(i == '' for i in countries):
             countries = []
-            addr_line = root.findall('./front/article-meta/aff/addr-line')
             for i in range(len(addr_line)):
-                aff = addr_line[i].text
+            addr_lines = root.findall('./front/article-meta/aff/addr-line')
+            for i in range(len(addr_lines)):
+                aff = addr_lines[i].text
                 country = aff.split(',')[-1].strip()
                 countries.append(country)
     except:
@@ -80,6 +81,18 @@ def parse_file(file):
             labels = root.findall('./front/article-meta/contrib-group/aff/label')
             for i in range(len(labels)):
                 aff = labels[i].tail
+                country = aff.split(',')[-1].strip()
+                countries.append(country)
+    except:
+        pass
+
+    ##6 different arrangement of xml files
+    try:
+        if all(i == '' for i in countries):
+            countries = []
+            addr_lines = root.findall('./front/article-meta/contrib-group/aff/addr-line')
+            for i in range(len(addr_lines)):
+                aff = addr_lines[i].text
                 country = aff.split(',')[-1].strip()
                 countries.append(country)
     except:
