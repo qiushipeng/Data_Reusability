@@ -10,7 +10,7 @@ def parse_file(file):
     try:
         root = ET.parse(file).getroot()
     except:
-        return 'error'
+        return 'RootError'
     
     ## find the serial number of last author's affliation
     try:
@@ -23,7 +23,7 @@ def parse_file(file):
             # e.g. <xref ref-type="aff" rid="A1">1</xref>
             aff_num = int(xrefs[0].attrib['rid'][1:])            
     except:
-        return 'error'
+        return 'AuthorError'
     
     countries = []
 
