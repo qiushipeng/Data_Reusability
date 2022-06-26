@@ -7,22 +7,8 @@ file_names = os.listdir(path)
 ### find the serial number of last author's affliation
 def get_aff_num(root):
     contribs = root.findall('./front/article-meta/contrib-group/contrib[@contrib-type="author"]')
-    xrefs = contribs[-1].findall('./xref')
-    try:
-        # e.g. <xref rid="aff2" ref-type="aff">2</xref>
-        aff_num = int(xrefs[0].attrib['rid'][3:])
-    except:
-        pass
-    try:
-        # e.g. <xref ref-type="aff" rid="A1">1</xref>
-        aff_num = int(xrefs[0].attrib['rid'][1:])
-    except:
-        pass
-    try:
-        # e.g. <xref ref-type="aff" rid="evy198-aff4">4</xref>
-        aff_num = int(xrefs[0].attrib['rid'].split('aff')[-1])
-    except:
-        pass
+    xrefs = contribs[-1].findall('./xref[@ref-type="aff"]')  
+    aff_num = int(xrefs[0].text)
     return aff_num
 
 
