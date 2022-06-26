@@ -122,6 +122,18 @@ def parse_file(file):
     except:
         pass
 
+    ##8 different arrangement of xml files
+    try:
+        if all(i == '' for i in countries):
+            countries = []
+            sups = root.findall('./front/article-meta/aff/sup')
+            for i in range(len(sups)):
+                aff = sups[i].tail
+                country = aff.split(',')[-1].strip()
+                countries.append(country)
+    except:
+        pass
+
     return countries[aff_num - 1]
 
 
