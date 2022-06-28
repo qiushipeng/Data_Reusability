@@ -154,12 +154,12 @@ def parse_file(file):
     ##10 different arrangement of xml files
     try:
         if all(i == '' for i in countries):
-        countries = []
-        affs = root.findall('./front/article-meta/contrib-group/aff')
-        for i in range(len(affs)):
-            aff = affs[i].text
-            country = aff.split(',')[-1].strip()
-            countries.append(country)
+            countries = []
+            affs = root.findall('./front/article-meta/contrib-group/aff')
+            for i in range(len(affs)):
+                aff = affs[i].text
+                country = aff.split(',')[-1].strip()
+                countries.append(country)
     except:
         pass
         
