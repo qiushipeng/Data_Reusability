@@ -9,6 +9,11 @@ def get_aff_num(root):
     contribs = root.findall('./front/article-meta/contrib-group/contrib[@contrib-type="author"]')
     xrefs = contribs[-1].findall('./xref[@ref-type="aff"]')
     try:
+        # e.g. <xref ref-type="aff" rid="af2-ijms-22-00514">2</xref>
+        aff_num = int(xrefs[0].text)
+    except:
+        pass
+    try:
         # e.g. <xref rid="aff2" ref-type="aff">2</xref>
         aff_num = int(xrefs[0].attrib['rid'][3:])
     except:
