@@ -162,7 +162,18 @@ def parse_file(file):
                 countries.append(country)
     except:
         pass
-        
+
+    ##11 different arrangement of xml files
+    try:
+        if all(i == '' for i in countries):
+            countries = []
+            institutions = root.findall('front/article-meta/contrib-group/aff/institution')
+            for i in range(len(institutions)):
+                aff = institutions[i].text
+                country = aff.split(',')[-1].strip()
+                countries.append(country)
+    except:
+        pass
     
     if len(countries) == 1 and countries[0] != '':
         return countries[0]
@@ -176,6 +187,7 @@ for file_name in file_names:
         country = parse_file(file)
     except:
         country = 'N/A'
+        print(file.name, 'N/A')
     pmc_ID = file_name.split('.')[0]
     saved_file = open('/scratch1/qiushipe/data_reusability/data_lists/country.csv', 'a+')
     saved_file.writelines(pmc_ID + ',' + country + '\n')
