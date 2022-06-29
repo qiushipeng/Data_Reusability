@@ -10,7 +10,11 @@ def get_aff_num(root):
     xrefs = contribs[-1].findall('./xref[@ref-type="aff"]')
     try:
         # e.g. <xref ref-type="aff" rid="af2-ijms-22-00514">2</xref>
-        aff_num = int(xrefs[0].text)
+        try:
+            aff_num = int(xrefs[0].text)
+        except:
+            # e.g. <xref rid="af0010" ref-type="aff">b</xref>
+            aff_num = ord(xrefs[0].text) - 96
     except:
         pass
     try:
