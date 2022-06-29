@@ -188,6 +188,7 @@ for file_name in file_names:
     except:
         country = 'N/A'
         print(file.name, 'N/A')
+    if country == None: country = 'None'
     pmc_ID = file_name.split('.')[0]
     saved_file = open('/scratch1/qiushipe/data_reusability/data_lists/country.csv', 'a+')
     saved_file.writelines(pmc_ID + ',' + country + '\n')
