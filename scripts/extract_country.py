@@ -8,6 +8,7 @@ file_names = os.listdir(path)
 def get_aff_num(root):
     contribs = root.findall('./front/article-meta/contrib-group/contrib[@contrib-type="author"]')
     xrefs = contribs[-1].findall('./xref[@ref-type="aff"]')
+    aff_num = None
     try:
         # e.g. <xref ref-type="aff" rid="af2-ijms-22-00514">2</xref>
         try:
@@ -17,21 +18,20 @@ def get_aff_num(root):
             aff_num = ord(xrefs[0].text) - 96
     except:
         pass
-    try:
-        # e.g. <xref rid="aff2" ref-type="aff">2</xref>
-        aff_num = int(xrefs[0].attrib['rid'][3:])
-    except:
-        pass
-    try:
-        # e.g. <xref ref-type="aff" rid="A1">1</xref>
-        aff_num = int(xrefs[0].attrib['rid'][1:])
-    except:
-        pass
-    try:
-        # e.g. <xref ref-type="aff" rid="evy198-aff4">4</xref>
-        aff_num = int(xrefs[0].attrib['rid'].split('aff')[-1])
-    except:
-        pass
+    
+    if aff_num == None:
+        try:
+            # e.g. <xref ref-type="aff" rid="evy198-aff4">4</xref>
+            aff_num = int(xrefs[0].attrib['rid'].split('aff')[-1])
+        except:
+            pass
+    else:
+        try:
+            # e.g. <xref ref-type="aff" rid="A1">1</xref>
+            aff_num = int(xrefs[0].attrib['rid'].split('A')[-1])
+        except:
+            pass
+
     return aff_num
 
 
