@@ -15,7 +15,8 @@ def get_aff_num(root):
             aff_num = int(xrefs[0].text)
         except:
             # e.g. <xref rid="af0010" ref-type="aff">b</xref>
-            aff_num = ord(xrefs[0].text) - 96
+            if ord(xrefs[0].text) > 96 and ord(xrefs[0].text) < 123:
+                aff_num = ord(xrefs[0].text) - 96
     except:
         pass
     
