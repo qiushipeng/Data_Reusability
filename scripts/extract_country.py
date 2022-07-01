@@ -13,10 +13,12 @@ def get_aff_num(root):
         # e.g. <xref ref-type="aff" rid="af2-ijms-22-00514">2</xref>
         try:
             aff_num = int(xrefs[0].text)
+            return aff_num
         except:
             # e.g. <xref rid="af0010" ref-type="aff">b</xref>
             if ord(xrefs[0].text) > 96 and ord(xrefs[0].text) < 123:
                 aff_num = ord(xrefs[0].text) - 96
+                return aff_num
     except:
         pass
     
@@ -24,12 +26,15 @@ def get_aff_num(root):
         try:
             # e.g. <xref ref-type="aff" rid="evy198-aff4">4</xref>
             aff_num = int(xrefs[0].attrib['rid'].split('aff')[-1])
+            return aff_num
         except:
             pass
-    else:
+
+    if aff_num == None:
         try:
             # e.g. <xref ref-type="aff" rid="A1">1</xref>
             aff_num = int(xrefs[0].attrib['rid'].split('A')[-1])
+            return aff_num
         except:
             pass
 
