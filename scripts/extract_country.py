@@ -185,6 +185,15 @@ def parse_file(file):
     except:
         pass
     
+    ##12 different arrangement of xml files
+    try:
+        if all(i == '' for i in countries):
+            countries = []
+            countries = root.findall('./front/article-meta/contrib-group/contrib/aff/country')
+            return countries[-1].text
+    except:
+        pass
+
     if len(countries) == 1 and countries[0] != '':
         return countries[0]
     else:
