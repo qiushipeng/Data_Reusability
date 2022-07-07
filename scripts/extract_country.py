@@ -25,7 +25,7 @@ def get_aff_num(root):
     if aff_num == None:
         try:
             # e.g. <xref ref-type="aff" rid="evy198-aff4">4</xref>
-            aff_num = int(xrefs[0].attrib['rid'].split('aff')[-1])
+            aff_num = int(xrefs[0].attrib['rid'].casefold().split('aff')[-1])
             return aff_num
         except:
             pass
@@ -51,6 +51,8 @@ def parse_file(file):
     ## find the serial number of last author's affliation
     try:
         aff_num = get_aff_num(root)
+        if aff_num == None:
+            print(file.name, 'AffNumError')
     except:
         print(file.name, 'AuthorError')
 
