@@ -37,6 +37,13 @@ def get_aff_num(root):
             return aff_num
         except:
             pass
+    if aff_num == None:
+        try:
+            # e.g. <xref ref-type="aff" rid="I1">
+            aff_num = int(xrefs[0].attrib['rid'].split('I')[-1])
+            return aff_num
+        except:
+            pass
 
     return aff_num
 
