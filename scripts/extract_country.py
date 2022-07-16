@@ -202,7 +202,7 @@ def parse_file(file):
     try:
         if all(i == '' for i in countries):
             countries = []
-            institutions = root.findall('front/article-meta/contrib-group/aff/institution')
+            institutions = root.findall('./front/article-meta/contrib-group/aff/institution')
             for i in range(len(institutions)):
                 aff = institutions[i].text
                 country = aff.split(',')[-1].strip()
