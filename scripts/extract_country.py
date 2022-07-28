@@ -63,6 +63,113 @@ def get_aff_num(root):
 
     return aff_num
 
+def find_country_1(element):
+    
+    country = ''
+    
+    ##1 different arrangement of xml files
+    try:
+        label = element.find('./label')
+        aff = label.tail
+            #  e.g. Unit of Health Sciences and Education, University of Hamburg, Martin-Luther-King Platz 6, 20146 Hamburg, Germany
+        country = aff.split(',')[-1].strip()
+        if country != '': return country
+    except:
+        pass
+    
+    ##3 different arrangement of xml files
+    try:
+        tag_country = element.find('./country')
+        country = tag_country.text
+        if country != '': return country
+    except: 
+        pass
+    
+    ##4 different arrangement of xml files
+    try:
+        addr_line = element.find('./addr-line')
+        aff = addr_line.text
+        country = aff.split(',')[-1].strip()
+        if country != '': return country
+    except:
+        pass
+
+    ##8 different arrangement of xml files
+    try:
+        sup = element.find('./sup')
+        aff = sup.tail
+        country = aff.split(',')[-1].strip()            
+        if country != '': return country
+    except:
+        pass
+
+    ##9 different arrangement of xml files
+    try:
+        aff = element.text
+        country = aff.split(',')[-1].strip()
+        if country != '': return country
+    except:
+        pass
+
+
+def find_country_2(element):
+    
+    country = ''
+    
+    ##2 different arrangement of xml files
+    try:
+        institution_wrap = element.find('./institution-wrap')
+        aff = institution_wrap.tail
+        country = aff.split(',')[-1].strip()
+        if country != '': return country
+    except:
+        pass
+    
+    
+    ##5 different arrangement of xml files
+    try:
+        label = element.find('./label')
+        aff = label.tail
+        country = aff.split(',')[-1].strip()
+        if country != '': return country
+    except:
+        pass
+
+    ##6 different arrangement of xml files
+    try:
+        addr_line = element.find('./addr-line')
+        aff = addr_line.text
+        country = aff.split(',')[-1].strip()
+        if country != '': return country
+    except:
+        pass
+
+    ##7 different arrangement of xml files
+    try:
+        tag_country = element.find('./country')
+        country = tag_country.text
+        if country != '': return country
+    except:
+        pass
+
+    ##10 different arrangement of xml files
+    try:
+        aff = element.text
+        country = aff.split(',')[-1].strip()
+        if country != '': return country
+    except:
+        pass
+
+    ##11 different arrangement of xml files
+    try:
+        institution = element.find('./institution')
+        aff = institution.text
+        country = aff.split(',')[-1].strip()
+        if country != '': return country
+    except:
+        pass
+
+
 
 ### find all countries mentioned in a xml file
 def parse_file(file):
@@ -80,144 +187,39 @@ def parse_file(file):
         print(file.name, 'AuthorError')
 
     countries = []
-
-    ##1 different arrangement of xml files
-    try:
-        labels = root.findall('./front/article-meta/aff/label')
-        for i in range(len(labels)):
-            aff = labels[i].tail
-                #  e.g. Unit of Health Sciences and Education, University of Hamburg, Martin-Luther-King Platz 6, 20146 Hamburg, Germany
-            country = aff.split(',')[-1].strip()
-            countries.append(country)
-    except:
-        pass
     
-    ##2 different arrangement of xml files
-    try:
-        if all(i == '' for i in countries):
-            countries = []
-            institution_wrap = root.findall('./front/article-meta/contrib-group/aff/institution-wrap')
-            for i in range(len(institution_wrap)):
-                aff = institution_wrap[i].tail
-                country = aff.split(',')[-1].strip()
-                countries.append(country)
-    except:
-        pass
-    
-    ##3 different arrangement of xml files
-    try:
-        if all(i == '' for i in countries):
-            countries = []
-            tag_country = root.findall('./front/article-meta/aff/country')
-            for i in range(len(tag_country)):
-                country = tag_country[i].text
-                countries.append(country)
-    except: 
-        pass
-    
-    ##4 different arrangement of xml files
-    try:
-        if all(i == '' for i in countries):
-            countries = []
-            addr_lines = root.findall('./front/article-meta/aff/addr-line')
-            for i in range(len(addr_lines)):
-                aff = addr_lines[i].text
-                country = aff.split(',')[-1].strip()
-                countries.append(country)
-    except:
-        pass
-    
-    ##5 different arrangement of xml files
-    try:
-        if all(i == '' for i in countries):
-            countries = []
-            labels = root.findall('./front/article-meta/contrib-group/aff/label')
-            for i in range(len(labels)):
-                aff = labels[i].tail
-                country = aff.split(',')[-1].strip()
-                countries.append(country)
-    except:
-        pass
-
-    ##6 different arrangement of xml files
-    try:
-        if all(i == '' for i in countries):
-            countries = []
-            addr_lines = root.findall('./front/article-meta/contrib-group/aff/addr-line')
-            for i in range(len(addr_lines)):
-                aff = addr_lines[i].text
-                country = aff.split(',')[-1].strip()
-                countries.append(country)
-    except:
-        pass
-
-    ##7 different arrangement of xml files
-    try:
-        if all(i == '' for i in countries):
-            countries = []
-            tag_country = root.findall('./front/article-meta/contrib-group/aff/country')
-            for i in range(len(tag_country)):
-                country = tag_country[i].text
-                countries.append(country)
-    except:
-        pass
-
-    ##8 different arrangement of xml files
-    try:
-        if all(i == '' for i in countries):
-            countries = []
-            sups = root.findall('./front/article-meta/aff/sup')
-            for i in range(len(sups)):
-                aff = sups[i].tail
-                country = aff.split(',')[-1].strip()
-                countries.append(country)
-    except:
-        pass
-
-    ##9 different arrangement of xml files
-    try:
-        if all(i == '' for i in countries):
-            countries = []
-            affs = root.findall('./front/article-meta/aff')
-            for i in range(len(affs)):
-                aff = affs[i].text
-                country = aff.split(',')[-1].strip()
-                countries.append(country)
-    except:
-        pass
-
-    ##10 different arrangement of xml files
-    try:
-        if all(i == '' for i in countries):
-            countries = []
-            affs = root.findall('./front/article-meta/contrib-group/aff')
-            for i in range(len(affs)):
-                aff = affs[i].text
-                country = aff.split(',')[-1].strip()
-                countries.append(country)
-    except:
-        pass
-
-    ##11 different arrangement of xml files
-    try:
-        if all(i == '' for i in countries):
-            countries = []
-            institutions = root.findall('./front/article-meta/contrib-group/aff/institution')
-            for i in range(len(institutions)):
-                aff = institutions[i].text
-                country = aff.split(',')[-1].strip()
-                countries.append(country)
-    except:
-        pass
-    
-    ##12 different arrangement of xml files
     try:
         if all(i == '' for i in countries):
             countries = []
             countries = root.findall('./front/article-meta/contrib-group/contrib/aff/country')
-            return countries[-1].text
+            return countries[-1].text        
     except:
         pass
+    
+    if all(i == '' for i in countries):
+        try:
+            for i in root.findall('./front/article-meta/aff'):
+                try:
+                    country = find_country_1(i)
+                except:
+                    country = 'N/A'
+                countries.append(country)
+        except:
+            pass
+
+    if all(i == '' for i in countries):
+        try:
+            for i in root.findall('./front/article-meta/contrib-group/aff'):
+                try:
+                    country = find_country_2(i)
+                except:
+                    country = 'N/A'
+                countries.append(country)
+        except:
+            pass
+
+
+
 
     if len(countries) == 1 and countries[0] != '':
         return countries[0]
