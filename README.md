@@ -31,8 +31,7 @@ Parse the XML files to find the earliest listed publish date and countries.
 ```bash
 cd scripts
 ./extract_date.sh
-extract_country.sh
-./
+./extract_country.sh
 cd ../
 ```
 
